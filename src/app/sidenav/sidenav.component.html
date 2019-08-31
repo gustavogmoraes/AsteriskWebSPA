@@ -1,0 +1,46 @@
+<!--<mat-sidenav-container
+    class="example-container" (backdropClick)="close('backdrop')" >
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
+  </mat-sidenav>
+ 
+
+    <mat-sidenav-content>
+        <div>
+            <button mat-button (click)="sidenav.open()">Open</button>
+            <mat-tab-group>
+                <mat-tab label="New Department"></mat-tab>
+                <mat-tab label="New Product"></mat-tab>
+                <mat-tab label="Products"></mat-tab>
+            </mat-tab-group>
+        </div>
+        
+    </mat-sidenav-content>
+
+   
+    
+</mat-sidenav-container>
+-->
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened class="background-image" style="width: 150px;">
+
+        <header>
+          <img src="https://dwglogo.com/wp-content/uploads/2017/03/1250px-AngularJS_logo.png" class="container">
+        </header>    
+        <button mat-button id="blackgrund-botao" class="container" routerLink="dash"><mat-icon aria-hidden="false">home</mat-icon>Basic</button><br>
+        <button mat-button id="blackgrund-botao" class="container" routerLink="form-gravacao" ><mat-icon aria-hidden="false">home</mat-icon>Basic</button><br>
+        <button mat-button id="blackgrund-botao" class="container"><mat-icon aria-hidden="false">home</mat-icon>Basic</button><br>
+        <button mat-button id="blackgrund-botao" class="container"><mat-icon aria-hidden="false">home</mat-icon>Basic</button><br>
+
+    
+    
+  </mat-drawer>
+  
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+    
+    
+
+  </mat-drawer-content>
+</mat-drawer-container>
+

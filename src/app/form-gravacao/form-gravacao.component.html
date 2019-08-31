@@ -1,0 +1,110 @@
+<div layout="column" layout-fill>
+    <div align="center" layout="row" layout-align="center center">
+  
+      <mat-card class="info-card mat-elevation-z8" flex="80" style="margin-top: 60px;width: 800px;;">
+  
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle>
+        </mat-card-subtitle>
+  
+        <mat-card-content fxLayout="column" fxLayoutAlign="stretch" >
+          
+          <form fxLayout="column" fxLayoutAlign="start stretch" #formClient="ngForm" (ngSubmit)="onSubmit()">
+  
+            
+  
+            <div fxFlex="100"  fxLayout="row" fxLayoutAlign="space-between  start">
+         
+
+                <mat-form-field fxFlex="45" >
+                    <mat-label>Data Inicio</mat-label>
+                    <input matInput [matDatepicker]="picker1"
+                    [(ngModel)]="dataForm.dataInicio" name="dataInicio"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  
+                  <mat-form-field fxFlex="45" >
+                    <mat-label>Data Final</mat-label>
+                    <input matInput [matDatepicker]="picker2"
+                    [(ngModel)]="dataForm.dataFinal" name="dataFinal"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                  </mat-form-field>
+  
+            </div>     
+
+            <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+                <mat-form-field fxFlex="45" >
+                  <input matInput type="time"  
+                    class="form-control" value="" placeholder="Hora Inicial" 
+                     name="horaInicial"
+                     [(ngModel)]="dataForm.horaInicial"
+                    >
+                </mat-form-field>
+                <mat-form-field fxFlex="45" >
+                    <input matInput type="time"  
+                      class="form-control" value="" placeholder="Hora Final" 
+                       name="horaFinal"
+                       [(ngModel)]="dataForm.horaFinal"
+                      >
+                  </mat-form-field>
+                
+              </div>
+
+            <div fxFlex="100"  fxLayout="row" fxLayoutAlign="space-between  start">
+
+                <mat-radio-group  fxFlex="40" fxLayout="row wrap" fxLayoutAlign="space-between start" 
+                 name="tipo" 
+                 [(ngModel)]="dataForm.tipo">
+                  <mat-radio-button value="Todas">Todas</mat-radio-button>
+                  <mat-radio-button value="Recebida" checked>Recebida</mat-radio-button>
+                  <mat-radio-button value="Originada">Originada</mat-radio-button>
+                </mat-radio-group> 
+            </div>
+           
+  
+
+            <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+              <mat-form-field fxFlex="45" >
+                <input matInput type="text"  
+                  class="form-control" value="" placeholder="Numero" 
+                  [(ngModel)]="dataForm.numero" name="numero"
+                  >
+              </mat-form-field>
+
+              <mat-form-field fxFlex="45" >
+                <input matInput type="text"  
+                  class="form-control" value="" placeholder="Ramal" 
+                  [(ngModel)]="dataForm.ramal" name="ramal"
+                  >
+              </mat-form-field>
+            </div>
+  
+            <button mat-button color="primary" type="submit" >
+              <mat-icon>done</mat-icon>Submit
+            </button>
+            
+          </form>
+  
+        </mat-card-content>
+        <mat-card-footer>
+        </mat-card-footer>
+      </mat-card>
+  
+  
+    </div>
+  </div>
+  <br>
+  <br>
+  <div layout="column" layout-fill> 
+  <div align="center" layout="row" layout-align="center center">
+    <app-datatable [filtro]=""flex="80" style="margin-top: 60px;width: 800px;"></app-datatable>
+  </div>>
+    
+  </div>
+
+      
+ 

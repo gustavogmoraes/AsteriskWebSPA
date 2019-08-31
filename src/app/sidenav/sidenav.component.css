@@ -1,0 +1,33 @@
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+   
+  }
+
+  .container{   
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 150px;
+    text-align:left;
+    color:darkgrey;
+    
+    
+  }
+
+  .background-image{
+    background-image: url(https://backgrounddownload.com/wp-content/uploads/2018/09/background-cinza-escuro-5.jpg);
+  }
+  #blackgrund-botao:hover {
+    background:rgb(71, 71, 70);
+    }
+
+header {
+      display: block;
+  }    
+
+  
