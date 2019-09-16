@@ -59,7 +59,7 @@
                 <mat-radio-group  fxFlex="40" fxLayout="row wrap" fxLayoutAlign="space-between start" 
                  name="tipo" 
                  [(ngModel)]="dataForm.tipo">
-                  <mat-radio-button value="Todas">Todas</mat-radio-button>
+                  <mat-radio-button value="">Todas</mat-radio-button>
                   <mat-radio-button value="Recebida" checked>Recebida</mat-radio-button>
                   <mat-radio-button value="Originada">Originada</mat-radio-button>
                 </mat-radio-group> 
@@ -69,14 +69,14 @@
 
             <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="20px">
               <mat-form-field fxFlex="45" >
-                <input matInput type="text"  
+                <input matInput type="number"  
                   class="form-control" value="" placeholder="Numero" 
                   [(ngModel)]="dataForm.numero" name="numero"
                   >
               </mat-form-field>
 
               <mat-form-field fxFlex="45" >
-                <input matInput type="text"  
+                <input matInput type="number"  
                   class="form-control" value="" placeholder="Ramal" 
                   [(ngModel)]="dataForm.ramal" name="ramal"
                   >
@@ -84,7 +84,7 @@
             </div>
   
             <button mat-button color="primary" type="submit" >
-              <mat-icon>done</mat-icon>Submit
+              <mat-icon>done</mat-icon>Filtrar
             </button>
             
           </form>
@@ -99,12 +99,23 @@
   </div>
   <br>
   <br>
+  <div layout="column" layout-fill>
+    <div align="center" layout="row" layout-align="center center">
+      <button mat-flat-button color="primary" (click)="click()">Download</button>
+    </div>
+  </div>
+  <br>
+  
+
   <div layout="column" layout-fill> 
   <div align="center" layout="row" layout-align="center center">
-    <app-datatable [filtro]=""flex="80" style="margin-top: 60px;width: 800px;"></app-datatable>
-  </div>>
+    <app-datatable (onNewSelected)="onSelecteds($event)"flex="80" style="margin-top: 60px;width: 800px;"></app-datatable>
+  </div>
     
   </div>
+
+
+  
 
       
  

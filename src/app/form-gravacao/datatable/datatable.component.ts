@@ -1,66 +1,32 @@
-import { Component, OnInit,Input, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit,Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort, MatTable, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { PeriodicElement, FiltroForm } from 'src/app/chamada.model';
+import { RepositionScrollStrategy } from '@angular/cdk/overlay';
+import { HttpClienteService } from 'src/app/http-cliente.service';
 
-export interface PeriodicElement {
-  position: number;
-  numero: number;
-  date: string;
-  duracao: string;
-  ramal: string;
-  tipo: string;
+import { DashComponent } from 'src/app/dash/dash.component';
+import { PlayerComponent } from '../player/player.component';
 
-}
-export enum tiposDeChamadas{
-  todas,
-  entrada,
-  saida
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 2, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 3, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 4, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 5, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 6, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 7, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 8, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 9, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 10, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 11, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 12, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 13, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 14, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 15, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 16, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 17, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 18, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 19, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 20, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 30, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 31, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 32, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 33, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 34, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 35, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 36, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 37, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 38, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 39, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 40, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 41, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 42, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 43, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 44, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},  
-  {position: 45, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 46, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-  {position: 47, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 48, numero: 6232104044, date:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: tiposDeChamadas[tiposDeChamadas.saida]},
-  {position: 49, numero: 6232105510, date:'2019-08-17 03:24:00', duracao:'03:15',ramal:'1800',tipo: tiposDeChamadas[tiposDeChamadas.entrada]},
-        
-];
 
+
+
+/*const ELEMENT_DATA: PeriodicElement[] = [
+  {position: '1', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '2', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '3', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '4', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '5', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '6', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '7', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '8', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '9', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+  {position: '10', numero: '6232104044', dataHora:'2019-08-18 06:24:00', duracao:'00:30',ramal:'1820',tipo: "",uniqueId:''},
+
+      
+];*/
+ 
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
@@ -70,28 +36,44 @@ export class DatatableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatTable,{static:true}) dataTable: MatTable<PeriodicElement[]>;
   
-displayedColumns: string[] = ['select', 'position', 'numero', 'date', 'duracao','ramal','tipo'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  private ELEMENT_DATA: PeriodicElement[];
+  
+  
+  displayedColumns: string[] = ['select', 'position', 'numero', 'date', 'duracao','ramal','tipo','audio'];
+  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  
 
-  private _filtro = "";
 
-  @Input() 
-  set filtro(filtro: string) {
-    this.applyFilter(filtro);
-  }
+  private _filtro;
+  
+  @Output() onNewSelected: EventEmitter<PeriodicElement[]> = new EventEmitter<PeriodicElement[]>();
+ 
 
-  constructor() { }
+  constructor(private _http: HttpClienteService,public dialog: MatDialog) { }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngOnInit() { 
+    this._http.onNewChamadas.subscribe((n)=>{
+     this.ELEMENT_DATA = n,     
+      console.log(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+      this.selection = new SelectionModel<PeriodicElement>(true, []);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    },()=>{
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    },
+    ()=>{
+      console.log("Completed");
+      
+    }
+    ); 
     
+  }
+  emitSelected(){
+    this.onNewSelected.emit(this.selection.selected);
   }
 
   isAllSelected() {
@@ -100,15 +82,37 @@ displayedColumns: string[] = ['select', 'position', 'numero', 'date', 'duracao',
     return numSelected === numRows;
   }
   masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+    //this.isAllSelected() ?
+        this.selection.clear(); //:
+        //this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   checkboxLabel(row?: PeriodicElement): string {
+    
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
+
+
+  montarURl(periodicElement: PeriodicElement ): string{
+    return periodicElement.uniqueId;
+
+  }
+  
+  openDialog(elemented): void {
+    const dialogRef = this.dialog.open(PlayerComponent, {
+      width: '400px',
+      
+      data: this.montarURl(elemented)
+      
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      
+    });
+  }
+  
+  
 }

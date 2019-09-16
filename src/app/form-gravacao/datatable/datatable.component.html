@@ -6,7 +6,7 @@
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null"
+        <mat-checkbox (change)="$event ? masterToggle() : null;emitSelected()"
                       [checked]="selection.hasValue() && isAllSelected()"
                       [indeterminate]="selection.hasValue() && !isAllSelected()"
                       [aria-label]="checkboxLabel()">
@@ -14,7 +14,7 @@
       </th>
       <td mat-cell *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
+                      (change)="$event ? selection.toggle(row) : null;emitSelected()"
                       [checked]="selection.isSelected(row)"
                       [aria-label]="checkboxLabel(row)">
         </mat-checkbox>
@@ -36,10 +36,10 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data da Chamada </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.dataHora}} </td>
     </ng-container>
   
-    <!-- Symbol Column -->
+    
     <ng-container matColumnDef="duracao">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>  Duração da Chamada </th>
       <td mat-cell *matCellDef="let element"> {{element.duracao}} </td>
@@ -54,12 +54,22 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>  Tipo </th>
       <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
    </ng-container>
+   <ng-container matColumnDef="audio">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+    <td mat-cell *matCellDef="let element"> 
+      <button mat-raised-button (click)="openDialog(element)"><mat-icon>play_circle_outline</mat-icon></button>
+      
+     </td>
+ </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selection.toggle(row)">
+        ><!-- 
+          <button mat-icon-button aria-label="" (click)="playAudio(element)">
+        <mat-icon>play_circle_outline</mat-icon>(click)="selection.toggle(row);emitSelected()" -->
     </tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[100, 50, 20]" showFirstLastButtons></mat-paginator>
 </div>
+
