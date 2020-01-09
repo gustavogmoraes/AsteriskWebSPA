@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { FiltroForm, PeriodicElement } from './chamada.model';
+import { FiltroForm, PeriodicElement, Blacklist } from './chamada.model';
 
 
 
@@ -10,9 +10,11 @@ import { FiltroForm, PeriodicElement } from './chamada.model';
 })
 export class HttpClienteService {
   onNewChamadas: EventEmitter<PeriodicElement[]> = new EventEmitter<PeriodicElement[]>();
+  onNewBlackList: EventEmitter<Blacklist[]> = new EventEmitter<Blacklist[]>();
 
 
   readonly url: string = 'https://localhost:5001/api/Ligacoes/ConsulteLigacoes';
+  readonly urlBlackList: string = 'https://localhost:5001/api/Ligacoes/PostBlackList';
   constructor(private http: HttpClient) { }
 
 
@@ -21,6 +23,9 @@ export class HttpClienteService {
   }
   private requisicaoGetChamadasParaPlay(id: string): Observable<any>{
     return this.http.get(`https://localhost:5001/api/Ligacoes/TransmitaGravacao/${id}`)
+  }
+  private requesicaoPostBlackList(fltroBacklist: Blacklist) : Observable<Blacklist[]>{
+    return this.http.post<Blacklist[]>(`${this.urlBlackList}`,fltroBacklist)
   }
  
   PostChamadas(filtro){
@@ -36,6 +41,13 @@ export class HttpClienteService {
   }
   getChamadasParaPlay(filtro){
     return `https://localhost:5001/api/Ligacoes/TransmitaGravacao/${filtro}`
+  }
+  PostBlackList(filtro){
+    this.requesicaoPostBlackList(filtro).subscribe(
+      (n)=>{
+        this.onNewBlackList.emit(n)
+      }
+    )
   }
 
 }

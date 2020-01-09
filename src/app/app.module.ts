@@ -15,11 +15,14 @@ import { MAT_DATE_LOCALE } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { PlayerComponent } from './form-gravacao/player/player.component';
+import { BlacklistComponent } from './blacklist/blacklist.component';
+import { DatatableBlackListComponent } from './blacklist/datatable-black-list/datatable-black-list.component';
 
 
 const appRoutes: Routes = [
   { path:'form-gravacao', component: FormGravacaoComponent},
-  { path: 'dash', component: DashComponent}
+  { path: 'dash', component: DashComponent},
+  { path: 'blacklist', component: BlacklistComponent}
   
 ];
 @NgModule({
@@ -30,6 +33,8 @@ const appRoutes: Routes = [
     DashComponent,
     DatatableComponent,
     PlayerComponent,
+    BlacklistComponent,
+    DatatableBlackListComponent,
     
     
   ],

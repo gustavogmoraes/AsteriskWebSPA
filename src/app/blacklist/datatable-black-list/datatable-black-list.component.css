@@ -1,0 +1,11 @@
+table {
+    width: 80%;
+  }
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+
+#blackgrund-botao:hover {
+    background-color: #cccc;
+    cursor:pointer;
+  }

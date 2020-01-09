@@ -27,4 +27,12 @@ export interface PeriodicElement {
     numero: string;
     ramal: string;
   }
+  export interface Blacklist{
+    id: number;
+    numero: string;
+    observacao: string;
+    dataCadastro: string;
+  }
+
+
 

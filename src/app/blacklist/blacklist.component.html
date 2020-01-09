@@ -1,0 +1,66 @@
+<div layout="column" layout-fill>
+    <div align="center" layout="row" layout-align="center center">
+  
+      <mat-card class="info-card mat-elevation-z8" flex="80" style="margin-top: 60px;width: 800px;;">
+  
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle>
+        </mat-card-subtitle>
+  
+        <mat-card-content fxLayout="column" fxLayoutAlign="stretch" >
+          
+          <form fxLayout="column" fxLayoutAlign="start stretch" #formClient="ngForm" (ngSubmit)="onSubmit()">
+  
+            <!--
+            <div fxFlex="100"  fxLayout="row" fxLayoutAlign="space-between  start">
+
+                <mat-radio-group  fxFlex="40" fxLayout="row wrap" fxLayoutAlign="space-between start" 
+                 name="tipo" 
+                 [(ngModel)]="dataForm.tipo">
+                  <mat-radio-button value="">Todas</mat-radio-button>
+                  <mat-radio-button value="Recebida" checked>Recebida</mat-radio-button>
+                  <mat-radio-button value="Originada">Originada</mat-radio-button>
+                </mat-radio-group> 
+            </div>
+           -->
+  
+
+            <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+              <mat-form-field fxFlex="45" >
+                <input matInput type="number"  
+                  class="form-control" value="" placeholder="Numero" 
+                  [(ngModel)]="dataForm.numero" name="numero"
+                  >
+              </mat-form-field>
+
+              <mat-form-field fxFlex="45" >
+                <input matInput type="text"  
+                  class="form-control" value="" placeholder="Observação" 
+                  [(ngModel)]="dataForm.observacao" name="observacao"
+                  >
+              </mat-form-field>
+            </div>
+  
+            <button mat-button color="primary" type="submit" >
+              <mat-icon>done</mat-icon>Cadastrar
+            </button>
+            
+          </form>
+  
+        </mat-card-content>
+        <mat-card-footer>
+        </mat-card-footer>
+      </mat-card>
+  
+  
+    </div>
+  </div>
+  <br>
+  <br>
+  
+  <div layout="column" layout-fill> 
+  <div align="center" layout="row" layout-align="center center">
+    <app-datatable-black-list (onNewSelected)="onSelecteds($event)"flex="80" style="margin-top: 60px;width: 800px;"></app-datatable-black-list>
+  </div>
+    
+  </div>
